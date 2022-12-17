@@ -1,0 +1,52 @@
+mutation CreatePost($createPostInput: CreatePostInput!) {
+  createPost(createPostInput: $createPostInput) {
+    ...postFields
+  }
+}
+
+query Post($_id: ID!, $searchInput: SearchCommentsInputNoID!) {
+  post(_id: $_id) {
+    ...postFields
+    comments(searchInput: $searchInput) {
+      _id
+      postId
+      body
+      userId
+    }
+  }
+}
+
+query Posts(
+  $searchInput: SearchPostsInput!
+  $searchCommentsInput: SearchCommentsInputNoID!
+) {
+  posts(searchInput: $searchInput) {
+    ...postFields
+    comments(searchInput: $searchCommentsInput) {
+      _id
+      postId
+      body
+      userId
+    }
+  }
+}
+
+mutation RemovePost($_id: ID!) {
+  removePost(_id: $_id) {
+    ...postFields
+  }
+}
+
+mutation UpdatePost($updatePostInput: UpdatePostInput!) {
+  updatePost(updatePostInput: $updatePostInput) {
+    ...postFields
+  }
+}
+
+fragment postFields on Post {
+  _id
+  title
+  description
+  status
+  userId
+}

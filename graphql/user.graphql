@@ -1,0 +1,36 @@
+mutation CreateUser($createUserInput: CreateUserInput!) {
+    createUser(createUserInput: $createUserInput){
+        ...userFields
+    }
+}
+mutation UpdateUser($updateUserInput: UpdateUserInput!) {
+    updateUser(updateUserInput: $updateUserInput){
+        ...userFields
+    }
+}
+mutation RemoveUser($_id: ID!) {
+    removeUser(_id: $_id){
+        ...userFields
+    }
+}
+
+query Users($input: SearchUsersInput!) {
+    users(input: $input) {
+        ...userFields
+    }
+}
+query User($input: SearchUserInput!) {
+    user(input: $input) {
+        ...userFields
+    }
+}
+
+
+fragment userFields on User {
+  _id
+  firstName
+  lastName
+  email
+}
+
+

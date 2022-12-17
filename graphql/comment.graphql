@@ -1,0 +1,30 @@
+query Comment($_id: ID!) {
+  comment(_id: $_id) {
+    ...commentFields
+  }
+}
+
+query Comments($searchInput: SearchCommentsInput!) {
+  comments(searchInput: $searchInput) {
+    ...commentFields
+  }
+}
+
+mutation UpdateComment($updateCommentInput: UpdateCommentInput!){
+    updateComment(updateCommentInput: $updateCommentInput){
+        ...commentFields
+    }
+}
+
+mutation RemoveComment($_id: ID!){
+    removeComment(_id: $_id){
+        ...commentFields
+    }
+}
+
+fragment commentFields on Comment {
+  _id
+  postId
+  body
+  userId
+}
