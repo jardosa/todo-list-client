@@ -42,7 +42,7 @@ export default function createApolloClient(ctx: any) {
     }
 
     if (authToken) {
-      return { headers: { authorization: authToken } };
+      return { headers: { authorization: `Bearer ${authToken}` } };
     }
     return { headers: {} };
   });

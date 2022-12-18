@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
       })
       if (result.loading) return
-      if (!result.loading && result.data) {
+      if (!result.loading && !result.data) {
         return router.push('/login')
       }
       if (result.errors) router.push('/login')
