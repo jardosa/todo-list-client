@@ -332,7 +332,7 @@ export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id
 
 export type PostsQueryVariables = Exact<{
   searchInput: SearchPostsInput;
-  searchCommentsInput: SearchCommentsInputNoId;
+  searchCommentsInput?: InputMaybe<SearchCommentsInputNoId>;
 }>;
 
 
@@ -776,7 +776,7 @@ export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
 export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
 export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
 export const PostsDocument = gql`
-    query Posts($searchInput: SearchPostsInput!, $searchCommentsInput: SearchCommentsInputNoID!) {
+    query Posts($searchInput: SearchPostsInput!, $searchCommentsInput: SearchCommentsInputNoID) {
   posts(searchInput: $searchInput) {
     ...postFields
     comments(searchInput: $searchCommentsInput) {

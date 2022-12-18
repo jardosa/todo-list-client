@@ -11,10 +11,13 @@ interface Props {
 const Layout = ({ children }: Props) => {
     const router = useRouter()
     const isLoginPage = router.pathname.includes('login')
+    const isRegisterPage = router.pathname.includes('register')
+    const isLogoutPage = router.pathname.includes('logout')
+
     
     return (
         <div>
-            {!isLoginPage && <Navbar />}
+            {!isLoginPage && !isRegisterPage && !isLogoutPage && <Navbar />}
             {children}
         </div>
     )

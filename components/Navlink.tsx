@@ -10,7 +10,7 @@ interface Props {
 
 const Navlink = ({ name, link, icon }: Props) => {
     return (
-        <Link href={link} className='text-black hover:text-white hover:opacity-75 hover:bg-blue-900 transition p-2 flex gap-2 justify-center items-center'>
+        <Link href={link} className='text-black hover:text-white hover:opacity-75 hover:bg-green-400 transition p-2 flex gap-2 justify-center items-center'>
             <div>
                 {icon}
             </div>
