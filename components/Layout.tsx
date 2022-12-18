@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
 
     
     return (
-        <div>
+        <div className='bg-green-50'>
             {!isLoginPage && !isRegisterPage && !isLogoutPage && <Navbar />}
             {children}
         </div>

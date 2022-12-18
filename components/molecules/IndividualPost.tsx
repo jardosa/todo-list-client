@@ -1,15 +1,24 @@
 import { PaperAirplaneIcon, PencilSquareIcon, TrashIcon, XCircleIcon } from "@heroicons/react/24/solid"
 import { useState, useEffect } from "react"
-import { PostQuery, PostStatus, PostsDocument, useRemovePostMutation, useUpdatePostMutation } from "../../generated/graphql"
+import { PostQuery, PostStatus, PostsDocument, useRemovePostMutation, useUpdatePostMutation, useWhoAmIQuery } from "../../generated/graphql"
 import { PostKeyToValue } from "../../types/enums/PostStatus.enum"
 import Button from "../atoms/Button"
 import Input from "../atoms/Input"
 import Select from "../atoms/Select"
 import TextArea from "../atoms/TextArea"
+import Link from "next/link"
+import getFullname from "../../utils/selectors/fullName"
+import clsx from "clsx"
+import { useRouter } from "next/router"
 
-const IndividualPost = ({ post }: {
-    post: PostQuery['post'],
-  }) => {
+interface IndividualPostInterface {
+    post: PostQuery['post']
+    showUser?: boolean
+    fullWidth?: boolean
+    showCommentCount?: boolean
+}
+
+const IndividualPost = ({ post, showUser = false, fullWidth = true, showCommentCount = false }: IndividualPostInterface) => {
   
     const [title, setTitle] = useState<string>()
     const [description, setDescription] = useState<string>()
@@ -17,6 +26,10 @@ const IndividualPost = ({ post }: {
     const [updateError, setUpdateError] = useState<string>()
     const [deleteError, setDeleteError] = useState<string>()
     const [mode, setMode] = useState<'read' | 'write'>('read')
+    const router = useRouter()
+    
+    
+    const isInIndividualPostPage = router.asPath === `/posts/${post._id}`
   
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
       setTitle(e.target.value.trim())
@@ -33,6 +46,8 @@ const IndividualPost = ({ post }: {
         setMode('read')
     }
 
+    const { data: userData, loading } = useWhoAmIQuery()
+
     const [updatePost] = useUpdatePostMutation({
         onError(error) {
             setUpdateError(error.message)
@@ -46,7 +61,10 @@ const IndividualPost = ({ post }: {
         onError(error) {
             setDeleteError(error.message)
         },
-        refetchQueries: [{ query: PostsDocument, variables: { searchInput: { userId: post.userId, limit: 10 } } }],
+        onCompleted(){
+            if(isInIndividualPostPage) router.push('/')
+        },
+        refetchQueries: [{ query: PostsDocument, variables: { searchInput: { userId: post.userId, limit: 10 } } }]
     })
 
     const onSubmit = (e: React.FormEvent) => {
@@ -86,9 +104,17 @@ const IndividualPost = ({ post }: {
       name,
       value
     }))
-  
+
+    const fullName  = getFullname(userData)
+
     return (
-        <form onSubmit={onSubmit} className="outline outline-1 outline-gray-300 w-full rounded-lg p-2 pb-10 space-y-2 relative">
+        <form onSubmit={onSubmit} 
+            className={clsx("outline outline-1 outline-gray-300 rounded-lg p-2 pb-10 space-y-2 w-full relative",
+            fullWidth ? 'max-w-none' : 'max-w-[600px]'
+            )}>
+            {showUser && <div className='flex flex-col gap-2 '>
+                <div>{`User: `}<Link className='hover:text-green-400 focus:text-green-400 transition cursor-pointer underline' href={"/users/" + userData?.whoAmI?._id}>{fullName}</Link></div>
+            </div>}
             <div className='flex flex-col gap-2 '>
                 <div>Title:</div>
                 <div><Input className="disabled:bg-white" disabled={mode === 'read'} error={!!updateError} value={title} onChange={onChangeTitle} type={'text'} /></div>
@@ -113,10 +139,13 @@ const IndividualPost = ({ post }: {
                     <Button onClick={deletePost} text="Delete Todo" iconPosition='right' className="hover:bg-red-600" error={true} type={'button'} icon={<TrashIcon className='h-6 w-6' />} />
                 </>
             }
+           {showCommentCount && <div>
+                <Link className='hover:text-green-400 focus:text-green-400 transition cursor-pointer underline'
+                    href={`/posts/${post._id}`}>{`Comments: ${post.comments.length}`}</Link>
+            </div>}
             <p className='absolute self-center bottom-2 text-red-400 font-semibold text-center'>
                 {updateError || deleteError}
             </p>
-
         </form>
     )
   }

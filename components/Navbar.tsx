@@ -31,7 +31,7 @@ const Navbar = () => {
     const navLinks = links.map((navlink) => (<Navlink key={navlink.link} {...navlink} />))
 
     return (
-        <nav className='w-full h-[60px] bg-gray-100 flex flex-row justify-center gap-3 sticky'>
+        <nav className='w-full h-[60px] bg-green-400 flex flex-row justify-center gap-3 sticky'>
             {navLinks}
         </nav>
     )

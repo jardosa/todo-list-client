@@ -132,7 +132,7 @@ export type Post = {
   _id: Scalars['ID'];
   comments: Array<Comment>;
   description: Scalars['String'];
-  status: Scalars['String'];
+  status: PostStatus;
   title: Scalars['String'];
   userId: Scalars['ID'];
 };
@@ -294,6 +294,13 @@ export type CommentsQueryVariables = Exact<{
 
 export type CommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> };
 
+export type CreateCommentMutationVariables = Exact<{
+  createCommentInput: CreateCommentInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string } };
+
 export type UpdateCommentMutationVariables = Exact<{
   updateCommentInput: UpdateCommentInput;
 }>;
@@ -320,15 +327,15 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
 
 export type PostQueryVariables = Exact<{
   _id: Scalars['ID'];
-  searchInput: SearchCommentsInputNoId;
+  searchInput?: InputMaybe<SearchCommentsInputNoId>;
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> } };
 
 export type PostsQueryVariables = Exact<{
   searchInput: SearchPostsInput;
@@ -336,23 +343,23 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> }> };
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> }> };
 
 export type RemovePostMutationVariables = Exact<{
   _id: Scalars['ID'];
 }>;
 
 
-export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string } };
+export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
 
 export type UpdatePostMutationVariables = Exact<{
   updatePostInput: UpdatePostInput;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string } };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
 
-export type PostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, status: string, userId: string };
+export type PostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string };
 
 export type CreateUserMutationVariables = Exact<{
   createUserInput: CreateUserInput;
@@ -602,6 +609,39 @@ export function useCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<C
 export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
 export type CommentsLazyQueryHookResult = ReturnType<typeof useCommentsLazyQuery>;
 export type CommentsQueryResult = Apollo.QueryResult<CommentsQuery, CommentsQueryVariables>;
+export const CreateCommentDocument = gql`
+    mutation CreateComment($createCommentInput: CreateCommentInput!) {
+  createComment(createCommentInput: $createCommentInput) {
+    ...commentFields
+  }
+}
+    ${CommentFieldsFragmentDoc}`;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      createCommentInput: // value for 'createCommentInput'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const UpdateCommentDocument = gql`
     mutation UpdateComment($updateCommentInput: UpdateCommentInput!) {
   updateComment(updateCommentInput: $updateCommentInput) {
@@ -734,7 +774,7 @@ export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutati
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
 export const PostDocument = gql`
-    query Post($_id: ID!, $searchInput: SearchCommentsInputNoID!) {
+    query Post($_id: ID!, $searchInput: SearchCommentsInputNoID) {
   post(_id: $_id) {
     ...postFields
     comments(searchInput: $searchInput) {

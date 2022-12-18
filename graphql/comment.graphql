@@ -10,6 +10,12 @@ query Comments($searchInput: SearchCommentsInput!) {
   }
 }
 
+mutation CreateComment($createCommentInput: CreateCommentInput!){
+    createComment(createCommentInput: $createCommentInput){
+      ...commentFields
+    }
+}
+
 mutation UpdateComment($updateCommentInput: UpdateCommentInput!){
     updateComment(updateCommentInput: $updateCommentInput){
         ...commentFields

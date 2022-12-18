@@ -4,7 +4,7 @@ mutation CreatePost($createPostInput: CreatePostInput!) {
   }
 }
 
-query Post($_id: ID!, $searchInput: SearchCommentsInputNoID!) {
+query Post($_id: ID!, $searchInput: SearchCommentsInputNoID) {
   post(_id: $_id) {
     ...postFields
     comments(searchInput: $searchInput) {
