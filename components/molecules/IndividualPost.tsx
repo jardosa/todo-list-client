@@ -10,6 +10,7 @@ import Link from "next/link"
 import getFullname from "../../utils/selectors/fullName"
 import clsx from "clsx"
 import { useRouter } from "next/router"
+import useCheckOwnDocument from "../../utils/hooks/useCheckOwnDocument"
 
 interface IndividualPostInterface {
     post: PostQuery['post']
@@ -29,6 +30,8 @@ const IndividualPost = ({ post, showUser = false, fullWidth = true, showCommentC
     const router = useRouter()
     
     
+    const { ownDocument } = useCheckOwnDocument(post.userId as string)
+
     const isInIndividualPostPage = router.asPath === `/posts/${post._id}`
   
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -135,13 +138,13 @@ const IndividualPost = ({ post, showUser = false, fullWidth = true, showCommentC
                 <div>Status:</div>
                 <div><Select className="disabled:bg-white" disabled={mode === 'read'} error={!!updateError} value={selectedStatus} onChange={onSelectStatus} options={options} /></div>
             </div>
-            {mode === "write" &&
+            {mode === "write" && ownDocument &&
                 (<div className="flex flex-row flex-nowrap gap-1">
                     <Button onClick={toggleReadMode} className="hover:bg-red-600" error={true} text="Cancel" icon={<XCircleIcon className='h-6 w-6' />} />
                     <Button type="submit" disabled={!!updateError || !isFormValid} icon={<PaperAirplaneIcon className='h-6 w-6' />} />
                 </div>)
             }
-            {mode === "read" &&
+            {mode === "read" && ownDocument &&
                 <>
                     <Button onClick={toggleWriteMode} text="Update Todo" iconPosition='right' type={'button'} icon={<PencilSquareIcon className='h-6 w-6' />} />
                     <Button onClick={deletePost} text="Delete Todo" iconPosition='right' className="hover:bg-red-600" error={true} type={'button'} icon={<TrashIcon className='h-6 w-6' />} />

@@ -5,17 +5,7 @@ import { getCommenterFullName } from "../../utils/selectors/fullName"
 import Button from "../atoms/Button"
 import { useState } from "react"
 import TextArea from "../atoms/TextArea"
-
-const useCheckOwnDocument = (_id: string) => {
-    const { data: whoAmIData } = useWhoAmIQuery();
-    const { data: userData } = useUserQuery({ variables: { input: { _id } } })
-
-    return {
-        ownDocument: whoAmIData?.whoAmI?._id === userData?.user?._id,
-        userData,
-        whoAmIData
-    }
-}
+import useCheckOwnDocument from "../../utils/hooks/useCheckOwnDocument"
 
 const Comment = ({ comment, fullWidth = false }: {
     comment: CommentQuery['comment'], fullWidth?: boolean
@@ -24,7 +14,7 @@ const Comment = ({ comment, fullWidth = false }: {
     const [viewMode, setViewMode] = useState<'read' | 'edit' | 'delete'>('read')
     const [body, setBody] = useState<string>('')
 
-    const { ownDocument, userData, whoAmIData } = useCheckOwnDocument(comment?.userId as string)
+    const { ownDocument, userData } = useCheckOwnDocument(comment?.userId as string)
     const fullName = userData && getCommenterFullName(userData)
     const placeholderDateTime = new Date().toUTCString()
 
