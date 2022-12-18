@@ -6,11 +6,6 @@ import Button from '../components/atoms/Button'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-
-// jardosa@leadorigin.com
-// password!
-
-
 const Login = () => {
     const [email, setEmail] = useState<string>()
     const [password, setPassword] = useState<string>()
@@ -28,15 +23,15 @@ const Login = () => {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (email && password) {
-            login({ variables: { email, password } })
+            login({ variables: { email: email.trim(), password } })
         }
     }
 
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setEmail(e.target.value.trim())
+        setEmail(e.target.value)
     }
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPassword(e.target.value.trim())
+        setPassword(e.target.value)
     }
     
     const isFormValid = email && password

@@ -42,16 +42,16 @@ const Comment = ({ comment, fullWidth = false }: {
     })
 
     const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        setBody(e.target.value.trim())
+        setBody(e.target.value)
     }
     const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
         if (e.code !== 'Enter') return
-        updateComment({ variables: { updateCommentInput: { _id: comment?._id as string, body } } })
+        updateComment({ variables: { updateCommentInput: { _id: comment?._id as string, body: body.trim() } } })
     }
 
     const buttonClickUpdate = () => {
-        updateComment({ variables: { updateCommentInput: { _id: comment?._id as string, body } } })
+        updateComment({ variables: { updateCommentInput: { _id: comment?._id as string, body: body.trim() } } })
     }
 
     const buttonClickCancel = () => {

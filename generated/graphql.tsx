@@ -196,7 +196,7 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
-  input: SearchUsersInput;
+  input?: InputMaybe<SearchUsersInput>;
 };
 
 export type SearchCommentsInput = {
@@ -383,7 +383,7 @@ export type RemoveUserMutationVariables = Exact<{
 export type RemoveUserMutation = { __typename?: 'Mutation', removeUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
 
 export type UsersQueryVariables = Exact<{
-  input: SearchUsersInput;
+  input?: InputMaybe<SearchUsersInput>;
 }>;
 
 
@@ -1023,7 +1023,7 @@ export type RemoveUserMutationHookResult = ReturnType<typeof useRemoveUserMutati
 export type RemoveUserMutationResult = Apollo.MutationResult<RemoveUserMutation>;
 export type RemoveUserMutationOptions = Apollo.BaseMutationOptions<RemoveUserMutation, RemoveUserMutationVariables>;
 export const UsersDocument = gql`
-    query Users($input: SearchUsersInput!) {
+    query Users($input: SearchUsersInput) {
   users(input: $input) {
     ...userFields
   }
@@ -1046,7 +1046,7 @@ export const UsersDocument = gql`
  *   },
  * });
  */
-export function useUsersQuery(baseOptions: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
       }

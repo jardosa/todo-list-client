@@ -10,7 +10,7 @@ export default function Home() {
   const [title, setTitle] = useState<string>()
   const [description, setDescription] = useState<string>()
   const [error, setError] = useState<string>()
-  const { data: user } = useWhoAmIQuery()
+  const { data: user } = useWhoAmIQuery({fetchPolicy: 'network-only'})
 
   const [createPost] = useCreatePostMutation(
     {
@@ -32,16 +32,16 @@ export default function Home() {
   }, [user?.whoAmI._id])
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value.trim())
+    setTitle(e.target.value)
   }
   const onChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setDescription(e.target.value.trim())
+    setDescription(e.target.value)
   }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (title && description) {
-      await createPost({ variables: { createPostInput: { title, description } } })
+      await createPost({ variables: { createPostInput: { title: title.trim() , description: description.trim() } } })
     }
   }
   const isFormValid = title && description

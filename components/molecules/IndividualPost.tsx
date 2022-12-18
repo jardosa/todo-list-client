@@ -32,10 +32,10 @@ const IndividualPost = ({ post, showUser = false, fullWidth = true, showCommentC
     const isInIndividualPostPage = router.asPath === `/posts/${post._id}`
   
     const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setTitle(e.target.value.trim())
+        setTitle(e.target.value)
     }
     const onChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-      setDescription(e.target.value.trim())
+        setDescription(e.target.value)
     }
 
     const toggleWriteMode = () => {
@@ -70,7 +70,15 @@ const IndividualPost = ({ post, showUser = false, fullWidth = true, showCommentC
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (title && description && selectedStatus) {
-            updatePost({ variables: { updatePostInput: { _id: post._id, status: PostStatus[selectedStatus as keyof typeof PostStatus], description, title, } } })
+            updatePost({
+                variables: {
+                    updatePostInput:
+                    {
+                        _id: post._id, status: PostStatus[selectedStatus as keyof typeof PostStatus],
+                        description: description.trim(), title: title.trim(),
+                    }
+                }
+            })
         }
     }
   

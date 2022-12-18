@@ -20,12 +20,12 @@ const AddComment = ({ postId }: { postId: string }) => {
     }
 
     const onChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        setComment(e.target.value.trim())
+        setComment(e.target.value)
     }
     const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
         if (e.code !== 'Enter') return
-        addComment({ variables: { createCommentInput: { body: comment, postId } } })
+        addComment({ variables: { createCommentInput: { body: comment.trim(), postId } } })
     }
     return (
         <form className='max-w-[600px] w-full' onSubmit={onSubmit}>

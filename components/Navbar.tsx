@@ -18,7 +18,7 @@ const Navbar = () => {
         },
         {
             name: 'Todos',
-            link: '/todos',
+            link: '/posts',
             icon: <PencilSquareIcon className='h-5 w-5' />
         },
         {

@@ -14,7 +14,7 @@ mutation RemoveUser($_id: ID!) {
     }
 }
 
-query Users($input: SearchUsersInput!) {
+query Users($input: SearchUsersInput) {
     users(input: $input) {
         ...userFields
     }

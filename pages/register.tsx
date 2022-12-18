@@ -32,16 +32,16 @@ const Register = () => {
     }, [email, password, firstName, lastName])
 
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setEmail(e.target.value.trim())
+        setEmail(e.target.value)
     }
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPassword(e.target.value.trim())
+        setPassword(e.target.value)
     }
     const onChangeFirstName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setFirstName(e.target.value.trim())
+        setFirstName(e.target.value)
     }
     const onChangeLastName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setLastName(e.target.value.trim())
+        setLastName(e.target.value)
     }
 
     let isFormValid: boolean = false
@@ -57,7 +57,11 @@ const Register = () => {
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (email && password && firstName && lastName) {
-            register({ variables: { registerInput: { email, firstName, lastName, password } } })
+            register({ variables: { registerInput: { 
+                email: email.trim(), 
+                firstName: firstName.trim(), 
+                lastName: lastName.trim(), 
+                password } } })
         }
     }
 
