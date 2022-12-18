@@ -21,15 +21,15 @@ const Button: React.FC<ButtonHTMLAttributes<HTMLButtonElement> & ButtonInterface
         className)} {...rest}>
 
         {icon && iconPosition === 'left' &&
-            <div>
+            <div className='sm:block hidden'>
                 {icon}
             </div>
         }
-        <div className='sm:block hidden'>
+        <div>
             {text}
         </div>
         {icon && iconPosition === 'right' &&
-            <div>
+            <div className='sm:block hidden'>
                 {icon}
             </div>
         }

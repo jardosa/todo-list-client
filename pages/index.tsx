@@ -65,7 +65,7 @@ export default function Home() {
           </form>
         </div>
       </div>
-      <div className="w-full flex flex-col p-5 gap-10 overflow-y-scroll">
+      <div className="w-full flex flex-col p-5 gap-5 overflow-y-scroll">
         <div className="text-2xl font-bold">Last 10 Todos</div>
         {data?.posts.map((post) => (<div>
           <IndividualPost key={post._id} post={post} />
