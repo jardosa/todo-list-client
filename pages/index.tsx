@@ -15,6 +15,10 @@ export default function Home() {
   const [createPost] = useCreatePostMutation(
     {
       onError(error) { setError(error.message) },
+      onCompleted() {
+        setDescription("")
+        setTitle("")
+      },
       refetchQueries: [{ query: PostsDocument, variables: { searchInput: { userId: user?.whoAmI._id, limit: 10 } } }],
     }
 
@@ -23,7 +27,6 @@ export default function Home() {
 
   useEffect(() => {
     if (user?.whoAmI._id) {
-      console.log({ user })
       usePostsLazy({ variables: { searchInput: { userId: user.whoAmI._id, limit: 10 } } })
     }
   }, [user?.whoAmI._id])
@@ -52,11 +55,11 @@ export default function Home() {
 
             <div className='flex flex-col gap-2'>
               <div>Title:</div>
-              <div><Input error={!!error} onChange={onChangeTitle} type={'text'} /></div>
+              <div><Input error={!!error} onChange={onChangeTitle} type={'text'} value={title}/></div>
             </div>
             <div className='flex flex-col gap-2'>
               <div>Description:</div>
-              <div><TextArea error={!!error} className="min-h-[100px]" onChange={onChangeDescription} /></div>
+              <div><TextArea error={!!error} className="min-h-[100px]" onChange={onChangeDescription} value={description}/></div>
             </div>
             <Button disabled={!!error || !isFormValid} error={!!error} iconPosition='right' type={'submit'} icon={<PaperAirplaneIcon className='h-6 w-6' />} />
             <p className='absolute self-center bottom-2 text-red-400 font-semibold text-center'>
