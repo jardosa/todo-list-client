@@ -25,7 +25,11 @@ const Post = () => {
         <div className="flex w-full h-[calc(100vh-60px)] flex-col items-center justify-start py-10 px-5 gap-5">
             {!data?.post && <PostNotAvailable />}
             {data?.post && (
-                <IndividualPost fullWidth={false} post={data?.post} />
+                <IndividualPost
+                    fullWidth={false}
+                    key={data?.post._id}
+                    post={data?.post}
+                />
             )}
             <div className="text-2xl">Comments</div>
             <AddComment postId={data?.post._id} />

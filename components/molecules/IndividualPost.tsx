@@ -31,12 +31,12 @@ interface IndividualPostInterface {
     showCommentCount?: boolean
 }
 
-const IndividualPost = ({
+const IndividualPost: React.FC<IndividualPostInterface> = ({
     post,
     showUser = false,
     fullWidth = true,
     showCommentCount = false,
-}: IndividualPostInterface) => {
+}) => {
     const [title, setTitle] = useState<string>()
     const [description, setDescription] = useState<string>()
     const [selectedStatus, setSelectedStatus] = useState<string>()

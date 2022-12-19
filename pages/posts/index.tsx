@@ -19,6 +19,7 @@ const Posts = () => {
                 <div className="w-full gap-5 flex flex-col items-center overflow-auto py-2">
                     {postsData?.posts?.map((post) => (
                         <IndividualPost
+                            key={post._id}
                             post={post}
                             showCommentCount
                             fullWidth={false}

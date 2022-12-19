@@ -1,10 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import {
-    usePostsLazyQuery,
-    usePostsQuery,
-    useUserQuery,
-} from '../../generated/graphql'
+import { usePostsLazyQuery, useUserQuery } from '../../generated/graphql'
 import UserRow from '../../components/molecules/UserRow'
 import IndividualPost from '../../components/molecules/IndividualPost'
 

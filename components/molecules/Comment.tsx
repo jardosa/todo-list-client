@@ -5,8 +5,6 @@ import {
     PostDocument,
     useRemoveCommentMutation,
     useUpdateCommentMutation,
-    useUserQuery,
-    useWhoAmIQuery,
 } from '../../generated/graphql'
 import { getCommenterFullName } from '../../utils/selectors/fullName'
 import Button from '../atoms/Button'
@@ -103,7 +101,7 @@ const Comment = ({
                     {fullName}
                 </Link>
             </div>
-            <div className="text-base">{placeholderDateTime}</div>
+            <div className="text-base">{comment?.updatedAt}</div>
             {(viewMode === 'read' || viewMode === 'delete') && (
                 <div className="leading-5 text-sm">{comment?.body}</div>
             )}

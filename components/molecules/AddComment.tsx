@@ -19,9 +19,7 @@ const AddComment = ({ postId }: { postId: string }) => {
             variables: { createCommentInput: { body: comment.trim(), postId } },
         })
     }
-    const onChangeComment = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ): void => {
+    const onChangeComment = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setComment(e.target.value)
     }
     return (

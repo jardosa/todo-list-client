@@ -8,10 +8,7 @@ query Post($_id: ID!, $searchInput: SearchCommentsInputNoID) {
   post(_id: $_id) {
     ...postFields
     comments(searchInput: $searchInput) {
-      _id
-      postId
-      body
-      userId
+      ...commentFields
     }
   }
 }
@@ -23,10 +20,7 @@ query Posts(
   posts(searchInput: $searchInput) {
     ...postFields
     comments(searchInput: $searchCommentsInput) {
-      _id
-      postId
-      body
-      userId
+      ...commentFields
     }
   }
 }
@@ -49,4 +43,10 @@ fragment postFields on Post {
   description
   status
   userId
+  ...timestampFields
+}
+
+fragment timestampFields on TimeStamps {
+  createdAt
+  updatedAt
 }

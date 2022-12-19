@@ -120,13 +120,11 @@ export default function Home() {
             <div className="w-full flex flex-col p-5 gap-5 overflow-y-auto">
                 <div className="text-2xl font-bold">Last 10 Todos</div>
                 {data?.posts.map((post) => (
-                    <div>
-                        <IndividualPost
-                            showCommentCount
-                            key={post._id}
-                            post={post}
-                        />
-                    </div>
+                    <IndividualPost
+                        showCommentCount
+                        key={post._id}
+                        post={post}
+                    />
                 ))}
                 {!data?.posts?.length && (
                     <div className="text-xl font-bold">

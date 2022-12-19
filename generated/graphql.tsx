@@ -13,13 +13,16 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
-export type Comment = {
+export type Comment = Node & TimeStamps & {
   __typename?: 'Comment';
   _id: Scalars['ID'];
   body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
   postId: Scalars['ID'];
+  updatedAt: Scalars['DateTime'];
   userId: Scalars['ID'];
 };
 
@@ -127,13 +130,15 @@ export type Node = {
   _id: Scalars['ID'];
 };
 
-export type Post = {
+export type Post = Node & TimeStamps & {
   __typename?: 'Post';
   _id: Scalars['ID'];
   comments: Array<Comment>;
+  createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   status: PostStatus;
   title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
   userId: Scalars['ID'];
 };
 
@@ -149,12 +154,14 @@ export enum PostStatus {
   NotStarted = 'NotStarted'
 }
 
-export type Profile = Node & {
+export type Profile = Node & TimeStamps & {
   __typename?: 'Profile';
   _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Query = {
@@ -230,6 +237,11 @@ export type SearchUsersInput = {
   offset?: InputMaybe<Scalars['Float']>;
 };
 
+export type TimeStamps = {
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type UpdateCommentInput = {
   _id: Scalars['ID'];
   body: Scalars['String'];
@@ -250,25 +262,27 @@ export type UpdateUserInput = {
   password?: InputMaybe<Scalars['String']>;
 };
 
-export type User = Node & {
+export type User = Node & TimeStamps & {
   __typename?: 'User';
   _id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type WhoAmIQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
+export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
 
 export type RegisterMutationVariables = Exact<{
   registerInput: CreateUserInput;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -276,46 +290,46 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } } };
 
-export type ProfileFieldsFragment = { __typename?: 'LoginPayload', profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } };
+export type ProfileFieldsFragment = { __typename?: 'LoginPayload', profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } };
 
 export type CommentQueryVariables = Exact<{
   _id: Scalars['ID'];
 }>;
 
 
-export type CommentQuery = { __typename?: 'Query', comment?: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string } | null };
+export type CommentQuery = { __typename?: 'Query', comment?: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any } | null };
 
 export type CommentsQueryVariables = Exact<{
   searchInput: SearchCommentsInput;
 }>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> };
+export type CommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any }> };
 
 export type CreateCommentMutationVariables = Exact<{
   createCommentInput: CreateCommentInput;
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string } };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any } };
 
 export type UpdateCommentMutationVariables = Exact<{
   updateCommentInput: UpdateCommentInput;
 }>;
 
 
-export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string } };
+export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any } };
 
 export type RemoveCommentMutationVariables = Exact<{
   _id: Scalars['ID'];
 }>;
 
 
-export type RemoveCommentMutation = { __typename?: 'Mutation', removeComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string } };
+export type RemoveCommentMutation = { __typename?: 'Mutation', removeComment: { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any } };
 
-export type CommentFieldsFragment = { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string };
+export type CommentFieldsFragment = { __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any };
 
 export type PingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -327,7 +341,7 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any } };
 
 export type PostQueryVariables = Exact<{
   _id: Scalars['ID'];
@@ -335,7 +349,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> } };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any }> } };
 
 export type PostsQueryVariables = Exact<{
   searchInput: SearchPostsInput;
@@ -343,61 +357,77 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string }> }> };
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any, comments: Array<{ __typename?: 'Comment', _id: string, postId: string, body: string, userId: string, createdAt: any, updatedAt: any }> }> };
 
 export type RemovePostMutationVariables = Exact<{
   _id: Scalars['ID'];
 }>;
 
 
-export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
+export type RemovePostMutation = { __typename?: 'Mutation', removePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any } };
 
 export type UpdatePostMutationVariables = Exact<{
   updatePostInput: UpdatePostInput;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string } };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any } };
 
-export type PostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string };
+export type PostFieldsFragment = { __typename?: 'Post', _id: string, title: string, description: string, status: PostStatus, userId: string, createdAt: any, updatedAt: any };
+
+type TimestampFields_Comment_Fragment = { __typename?: 'Comment', createdAt: any, updatedAt: any };
+
+type TimestampFields_Post_Fragment = { __typename?: 'Post', createdAt: any, updatedAt: any };
+
+type TimestampFields_Profile_Fragment = { __typename?: 'Profile', createdAt: any, updatedAt: any };
+
+type TimestampFields_User_Fragment = { __typename?: 'User', createdAt: any, updatedAt: any };
+
+export type TimestampFieldsFragment = TimestampFields_Comment_Fragment | TimestampFields_Post_Fragment | TimestampFields_Profile_Fragment | TimestampFields_User_Fragment;
 
 export type CreateUserMutationVariables = Exact<{
   createUserInput: CreateUserInput;
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
 
 export type UpdateUserMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
 
 export type RemoveUserMutationVariables = Exact<{
   _id: Scalars['ID'];
 }>;
 
 
-export type RemoveUserMutation = { __typename?: 'Mutation', removeUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
+export type RemoveUserMutation = { __typename?: 'Mutation', removeUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
 
 export type UsersQueryVariables = Exact<{
   input?: InputMaybe<SearchUsersInput>;
 }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', _id: string, firstName: string, lastName: string, email: string }> };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any }> };
 
 export type UserQueryVariables = Exact<{
   input: SearchUserInput;
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } | null };
 
-export type UserFieldsFragment = { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string };
+export type UserFieldsFragment = { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any };
 
+export const TimestampFieldsFragmentDoc = gql`
+    fragment timestampFields on TimeStamps {
+  createdAt
+  updatedAt
+}
+    `;
 export const ProfileFieldsFragmentDoc = gql`
     fragment profileFields on LoginPayload {
   profile {
@@ -405,17 +435,19 @@ export const ProfileFieldsFragmentDoc = gql`
     firstName
     lastName
     email
+    ...timestampFields
   }
 }
-    `;
+    ${TimestampFieldsFragmentDoc}`;
 export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on Comment {
   _id
   postId
   body
   userId
+  ...timestampFields
 }
-    `;
+    ${TimestampFieldsFragmentDoc}`;
 export const PostFieldsFragmentDoc = gql`
     fragment postFields on Post {
   _id
@@ -423,16 +455,18 @@ export const PostFieldsFragmentDoc = gql`
   description
   status
   userId
+  ...timestampFields
 }
-    `;
+    ${TimestampFieldsFragmentDoc}`;
 export const UserFieldsFragmentDoc = gql`
     fragment userFields on User {
   _id
   firstName
   lastName
   email
+  ...timestampFields
 }
-    `;
+    ${TimestampFieldsFragmentDoc}`;
 export const WhoAmIDocument = gql`
     query WhoAmI {
   whoAmI {
@@ -440,9 +474,10 @@ export const WhoAmIDocument = gql`
     firstName
     lastName
     email
+    ...timestampFields
   }
 }
-    `;
+    ${TimestampFieldsFragmentDoc}`;
 
 /**
  * __useWhoAmIQuery__
@@ -778,14 +813,12 @@ export const PostDocument = gql`
   post(_id: $_id) {
     ...postFields
     comments(searchInput: $searchInput) {
-      _id
-      postId
-      body
-      userId
+      ...commentFields
     }
   }
 }
-    ${PostFieldsFragmentDoc}`;
+    ${PostFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}`;
 
 /**
  * __usePostQuery__
@@ -820,14 +853,12 @@ export const PostsDocument = gql`
   posts(searchInput: $searchInput) {
     ...postFields
     comments(searchInput: $searchCommentsInput) {
-      _id
-      postId
-      body
-      userId
+      ...commentFields
     }
   }
 }
-    ${PostFieldsFragmentDoc}`;
+    ${PostFieldsFragmentDoc}
+${CommentFieldsFragmentDoc}`;
 
 /**
  * __usePostsQuery__
