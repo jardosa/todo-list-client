@@ -7,7 +7,9 @@
     "build": "npm run generate & next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "prettier-check": "npx prettier --check",
+    "prettier-write": "npx prettier --write"
   },
   "dependencies": {
     "@apollo/client": "^3.7.2",

@@ -1,0 +1,13 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+**/.next
+**/graphql
+**/generated
+
+**/*.config.js
+
+**/package*.json
+
