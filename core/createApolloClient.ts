@@ -12,9 +12,9 @@ import { useMemo } from 'react'
 let apolloClient: ApolloClient<any>
 let graphqlUrl: string | undefined
 if (process.browser) {
-    graphqlUrl = process.env.NEXT_PUBLIC_EXTERNAL_GRAPHQL_URL
+    graphqlUrl = process.env.NEXT_PUBLIC_EXTERNAL_GRAPHQL_URL || "http://localhost:3001/graphql" // TODO FOR DEMO PURPOSES ONLY. REMOVE IF IN PROD
 } else {
-    graphqlUrl = process.env.INTERNAL_GRAPHQL_URL
+    graphqlUrl = process.env.INTERNAL_GRAPHQL_URL || "http://localhost:3001/graphql" // TODO FOR DEMO PURPOSES ONLY. REMOVE IF IN PROD
 }
 
 export default function createApolloClient(ctx: any) {
