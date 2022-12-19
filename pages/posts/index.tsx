@@ -7,7 +7,7 @@ import Link from 'next/link'
 const Posts = () => {
     const { data: userData, loading } = useWhoAmIQuery()
 
-    const [usePostsLazy, { data }] = usePostsLazyQuery({
+    const [usePostsLazy, { data: postsData }] = usePostsLazyQuery({
         fetchPolicy: 'network-only',
     })
 
@@ -21,19 +21,13 @@ const Posts = () => {
         }
     }, [userData?.whoAmI._id])
 
-
-    const { data: postsData } = usePostsQuery({
-        variables: { searchInput: { userId: userData?.whoAmI?._id as string } },
-        fetchPolicy: 'network-only',
-    })
-
     const fullName = getFullname(userData)
 
     return (
-        <div className="w-full h-[calc(100vh-60px)] flex items-center flex-col py-5 gap-5">
+        <div className="w-full h-[calc(100vh-60px)] flex items-center flex-col p-5 gap-5">
             <div className="text-2xl">{`Posts for ${fullName}`}</div>
             {!!postsData?.posts?.length ? (
-                <div className="w-full gap-5 flex flex-col items-center overflow-auto py-2">
+                <div className="w-full gap-5 flex flex-col items-center overflow-auto py-2 px-2">
                     {postsData?.posts?.map((post) => (
                         <IndividualPost
                             key={post._id}
