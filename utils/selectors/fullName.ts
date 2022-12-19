@@ -1,4 +1,4 @@
-import { UserQuery, WhoAmIQuery, UsersQuery } from './../../generated/graphql';
+import { UserQuery, WhoAmIQuery, UsersQuery } from './../../generated/graphql'
 
 const getFullname = (userData: WhoAmIQuery | undefined): string => {
     return `${userData?.whoAmI.firstName} ${userData?.whoAmI.lastName}`
@@ -6,13 +6,14 @@ const getFullname = (userData: WhoAmIQuery | undefined): string => {
 
 export default getFullname
 
-
-export const getCommenterFullName = (userData: UserQuery | undefined): string => {
+export const getCommenterFullName = (
+    userData: UserQuery | undefined
+): string => {
     return `${userData?.user?.firstName} ${userData?.user?.lastName}`
-
 }
 
-export const getUserFullName =  (user: UserQuery['user'] | undefined): string => {
+export const getUserFullName = (
+    user: UserQuery['user'] | undefined
+): string => {
     return `${user?.firstName} ${user?.lastName}`
-
 }
