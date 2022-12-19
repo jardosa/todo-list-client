@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useCreateCommentMutation } from '../../generated/graphql'
-import TextArea from '../atoms/TextArea'
 import { PostDocument } from '../../generated/graphql'
+import Input from '../atoms/Input'
 
 const AddComment = ({ postId }: { postId: string }) => {
     const [comment, setComment] = useState<string>('')
@@ -14,29 +14,21 @@ const AddComment = ({ postId }: { postId: string }) => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        addComment({
-            variables: { createCommentInput: { body: comment, postId } },
-        })
-    }
-
-    const onChangeComment = (
-        e: React.ChangeEvent<HTMLTextAreaElement>
-    ): void => {
-        setComment(e.target.value)
-    }
-    const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        e.preventDefault()
-        if (e.code !== 'Enter') return
+        if (!comment.trim()) return
         addComment({
             variables: { createCommentInput: { body: comment.trim(), postId } },
         })
     }
+    const onChangeComment = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void => {
+        setComment(e.target.value)
+    }
     return (
         <form className="max-w-[600px] w-full" onSubmit={onSubmit}>
-            <TextArea
+            <Input
                 value={comment}
                 onChange={onChangeComment}
-                onKeyUp={onKeyUp}
                 placeholder="Add your comment here. Press Enter to submit"
                 name="comment"
                 className="rounded-lg w-full min-h-[50px]"
