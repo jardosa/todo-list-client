@@ -11,6 +11,7 @@ import Button from '../atoms/Button'
 import { useState } from 'react'
 import TextArea from '../atoms/TextArea'
 import useCheckOwnDocument from '../../utils/hooks/useCheckOwnDocument'
+import parseDateTime from '../../utils/selectors/parseDateTime'
 
 const Comment = ({
     comment,
@@ -26,7 +27,6 @@ const Comment = ({
         comment?.userId as string
     )
     const fullName = userData && getCommenterFullName(userData)
-    const placeholderDateTime = new Date().toUTCString()
 
     const [updateComment] = useUpdateCommentMutation({
         onCompleted() {
@@ -101,7 +101,7 @@ const Comment = ({
                     {fullName}
                 </Link>
             </div>
-            <div className="text-base">{comment?.updatedAt}</div>
+            <div className="text-base">{parseDateTime(comment?.updatedAt)}</div>
             {(viewMode === 'read' || viewMode === 'delete') && (
                 <div className="leading-5 text-sm">{comment?.body}</div>
             )}

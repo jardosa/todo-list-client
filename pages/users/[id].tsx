@@ -18,20 +18,26 @@ const User = () => {
         if (query?.id)
             usePostsLazy({
                 variables: { searchInput: { userId: query.id as string } },
+                fetchPolicy: 'network-only'
             })
     }, [query.id])
     return (
-        <div className="w-full h-[calc(100vh-60px)] flex flex-col py-10 gap-5 items-center">
+        <div className="w-full h-[calc(100vh-60px)] flex flex-col py-10 gap-5 items-center p-5">
             <UserRow user={user?.user} />
             <div className="text-2xl">List of Todos</div>
-            {posts?.posts.map((post) => (
-                <IndividualPost
-                    showCommentCount
-                    key={post._id}
-                    fullWidth={false}
-                    post={post}
-                />
-            ))}
+            {!posts?.posts.length && <div className="text-xl font-bold">
+                No posts currently.
+            </div>}
+            <div className="max-w-[600px] w-full h-[calc(100vh-60px)] flex flex-col gap-5 p-1 overflow-auto items-center">
+                {posts?.posts.map((post) => (
+                    <IndividualPost
+                        showCommentCount
+                        key={post._id}
+                        fullWidth={false}
+                        post={post}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

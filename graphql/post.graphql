@@ -43,7 +43,8 @@ fragment postFields on Post {
   description
   status
   userId
-  ...timestampFields
+  createdAt
+  updatedAt
 }
 
 fragment timestampFields on TimeStamps {

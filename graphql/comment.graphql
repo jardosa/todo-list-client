@@ -33,5 +33,6 @@ fragment commentFields on Comment {
   postId
   body
   userId
-  ...timestampFields
+  createdAt
+  updatedAt
 }

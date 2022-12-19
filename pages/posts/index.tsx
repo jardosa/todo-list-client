@@ -1,13 +1,30 @@
-import React from 'react'
-import { usePostsQuery, useWhoAmIQuery } from '../../generated/graphql'
+import React, { useEffect } from 'react'
+import { usePostsLazyQuery, usePostsQuery, useWhoAmIQuery } from '../../generated/graphql'
 import getFullname from '../../utils/selectors/fullName'
 import IndividualPost from '../../components/molecules/IndividualPost'
 import Link from 'next/link'
 
 const Posts = () => {
     const { data: userData, loading } = useWhoAmIQuery()
+
+    const [usePostsLazy, { data }] = usePostsLazyQuery({
+        fetchPolicy: 'network-only',
+    })
+
+    useEffect(() => {
+        if (userData?.whoAmI._id) {
+            usePostsLazy({
+                variables: {
+                    searchInput: { userId: userData.whoAmI._id, limit: 10 },
+                },
+            })
+        }
+    }, [userData?.whoAmI._id])
+
+
     const { data: postsData } = usePostsQuery({
         variables: { searchInput: { userId: userData?.whoAmI?._id as string } },
+        fetchPolicy: 'network-only',
     })
 
     const fullName = getFullname(userData)

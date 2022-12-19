@@ -13,6 +13,7 @@ const UserRow = ({
     const fullName = getUserFullName(user)
     const { data: postsData } = usePostsQuery({
         variables: { searchInput: { userId: user?._id as string } },
+        fetchPolicy: 'network-only'
     })
 
     const filterPostsByStatus = (status: string) => {
@@ -27,6 +28,9 @@ const UserRow = ({
                 >
                     {fullName}
                 </Link>
+            </div>
+            <div className='text-lg'>
+                Email Address: {user?.email}
             </div>
             <div>Total Number of Todos: {postsData?.posts.length}</div>
             <div>

@@ -23,6 +23,7 @@ import getFullname from '../../utils/selectors/fullName'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import useCheckOwnDocument from '../../utils/hooks/useCheckOwnDocument'
+import parseDateTime from '../../utils/selectors/parseDateTime'
 
 interface IndividualPostInterface {
     post: PostQuery['post']
@@ -201,6 +202,9 @@ const IndividualPost: React.FC<IndividualPostInterface> = ({
                         options={options}
                     />
                 </div>
+            </div>
+            <div className="flex flex-col gap-2 ">
+                <div>Last Updated: {parseDateTime(post.updatedAt, 'utc')}</div>
             </div>
             {mode === 'write' && ownDocument && (
                 <div className="flex flex-row flex-nowrap gap-1">

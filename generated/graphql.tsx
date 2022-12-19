@@ -422,12 +422,6 @@ export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', _i
 
 export type UserFieldsFragment = { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any };
 
-export const TimestampFieldsFragmentDoc = gql`
-    fragment timestampFields on TimeStamps {
-  createdAt
-  updatedAt
-}
-    `;
 export const ProfileFieldsFragmentDoc = gql`
     fragment profileFields on LoginPayload {
   profile {
@@ -435,19 +429,21 @@ export const ProfileFieldsFragmentDoc = gql`
     firstName
     lastName
     email
-    ...timestampFields
+    createdAt
+    updatedAt
   }
 }
-    ${TimestampFieldsFragmentDoc}`;
+    `;
 export const CommentFieldsFragmentDoc = gql`
     fragment commentFields on Comment {
   _id
   postId
   body
   userId
-  ...timestampFields
+  createdAt
+  updatedAt
 }
-    ${TimestampFieldsFragmentDoc}`;
+    `;
 export const PostFieldsFragmentDoc = gql`
     fragment postFields on Post {
   _id
@@ -455,18 +451,26 @@ export const PostFieldsFragmentDoc = gql`
   description
   status
   userId
-  ...timestampFields
+  createdAt
+  updatedAt
 }
-    ${TimestampFieldsFragmentDoc}`;
+    `;
+export const TimestampFieldsFragmentDoc = gql`
+    fragment timestampFields on TimeStamps {
+  createdAt
+  updatedAt
+}
+    `;
 export const UserFieldsFragmentDoc = gql`
     fragment userFields on User {
   _id
   firstName
   lastName
   email
-  ...timestampFields
+  createdAt
+  updatedAt
 }
-    ${TimestampFieldsFragmentDoc}`;
+    `;
 export const WhoAmIDocument = gql`
     query WhoAmI {
   whoAmI {
@@ -474,10 +478,11 @@ export const WhoAmIDocument = gql`
     firstName
     lastName
     email
-    ...timestampFields
+    createdAt
+    updatedAt
   }
 }
-    ${TimestampFieldsFragmentDoc}`;
+    `;
 
 /**
  * __useWhoAmIQuery__

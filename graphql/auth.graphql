@@ -4,7 +4,8 @@ query WhoAmI {
     firstName
     lastName
     email
-    ...timestampFields
+    createdAt
+    updatedAt
 
   }
 }
@@ -29,6 +30,7 @@ fragment profileFields on LoginPayload {
     firstName
     lastName
     email
-    ...timestampFields
+    createdAt
+    updatedAt
   }
 }

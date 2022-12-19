@@ -31,7 +31,8 @@ fragment userFields on User {
   firstName
   lastName
   email
-  ...timestampFields
+  createdAt
+  updatedAt
 }
 
 
