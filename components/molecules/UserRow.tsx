@@ -1,7 +1,8 @@
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import { UserQuery, usePostsQuery, PostStatus } from '../../generated/graphql'
+import { UserQuery, usePostsQuery, PostStatus, usePostsLazyQuery } from '../../generated/graphql'
 import { getUserFullName } from '../../utils/selectors/fullName'
+import { useEffect } from 'react'
 
 const UserRow = ({
     user,
@@ -11,10 +12,16 @@ const UserRow = ({
     showViewProfile?: boolean
 }) => {
     const fullName = getUserFullName(user)
-    const { data: postsData } = usePostsQuery({
-        variables: { searchInput: { userId: user?._id as string } },
+    const [usePostsLazy, { data: postsData }] = usePostsLazyQuery({
         fetchPolicy: 'network-only'
     })
+
+    useEffect(() => {
+        if (user?._id)
+            usePostsLazy({
+                variables: { searchInput: { userId: user?._id as string } },
+            })
+    }, [user?._id])
 
     const filterPostsByStatus = (status: string) => {
         return postsData?.posts?.filter((post) => post.status === status)

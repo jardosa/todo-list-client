@@ -275,14 +275,14 @@ export type User = Node & TimeStamps & {
 export type WhoAmIQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
+export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
 
 export type RegisterMutationVariables = Exact<{
   registerInput: CreateUserInput;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -290,9 +290,9 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', authToken: string, profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } } };
 
-export type ProfileFieldsFragment = { __typename?: 'LoginPayload', profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string, createdAt: any, updatedAt: any } };
+export type ProfileFieldsFragment = { __typename?: 'LoginPayload', profile: { __typename?: 'Profile', _id: string, firstName?: string | null, lastName?: string | null, email: string } };
 
 export type CommentQueryVariables = Exact<{
   _id: Scalars['ID'];
@@ -390,7 +390,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string, createdAt: any, updatedAt: any } };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', _id: string, firstName: string, lastName: string, email: string } };
 
 export type UpdateUserMutationVariables = Exact<{
   updateUserInput: UpdateUserInput;
@@ -429,8 +429,6 @@ export const ProfileFieldsFragmentDoc = gql`
     firstName
     lastName
     email
-    createdAt
-    updatedAt
   }
 }
     `;
@@ -478,8 +476,6 @@ export const WhoAmIDocument = gql`
     firstName
     lastName
     email
-    createdAt
-    updatedAt
   }
 }
     `;
@@ -962,10 +958,13 @@ export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMut
 export const CreateUserDocument = gql`
     mutation CreateUser($createUserInput: CreateUserInput!) {
   createUser(createUserInput: $createUserInput) {
-    ...userFields
+    _id
+    firstName
+    lastName
+    email
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    `;
 export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
 
 /**

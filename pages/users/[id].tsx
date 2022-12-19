@@ -1,26 +1,30 @@
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { usePostsLazyQuery, useUserQuery } from '../../generated/graphql'
+import React, { use, useEffect } from 'react'
+import { usePostsLazyQuery, useUserLazyQuery, useUserQuery } from '../../generated/graphql'
 import UserRow from '../../components/molecules/UserRow'
 import IndividualPost from '../../components/molecules/IndividualPost'
 
 const User = () => {
     const router = useRouter()
     const { query } = router
-    const { data: user } = useUserQuery({
-        variables: { input: { _id: query.id as string } },
-        skip: !query?.id,
+
+    const [useUsersLazy, { data: user }] = useUserLazyQuery({ fetchPolicy: 'network-only' })
+    useEffect(() => {
+        if (query.id) {
+            useUsersLazy({ variables: { input: { _id: query?.id as string } } })
+        }
+    }, [query.id])
+
+    const [usePostsLazy, { data: posts }] = usePostsLazyQuery({
+        fetchPolicy: 'network-only'
     })
 
-    const [usePostsLazy, { data: posts }] = usePostsLazyQuery()
-
     useEffect(() => {
-        if (query?.id)
+        if (user?.user?._id)
             usePostsLazy({
-                variables: { searchInput: { userId: query.id as string } },
-                fetchPolicy: 'network-only'
+                variables: { searchInput: { userId: user?.user?._id as string } },
             })
-    }, [query.id])
+    }, [user?.user?._id])
     return (
         <div className="w-full h-[calc(100vh-60px)] flex flex-col py-10 gap-5 items-center p-5">
             <UserRow user={user?.user} />

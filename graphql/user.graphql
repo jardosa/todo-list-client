@@ -1,7 +1,10 @@
 mutation CreateUser($createUserInput: CreateUserInput!) {
     createUser(createUserInput: $createUserInput){
-        ...userFields
-    }
+        _id
+        firstName
+        lastName
+        email    
+  }
 }
 mutation UpdateUser($updateUserInput: UpdateUserInput!) {
     updateUser(updateUserInput: $updateUserInput){
