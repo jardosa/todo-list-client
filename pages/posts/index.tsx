@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { usePostsLazyQuery, usePostsQuery, useWhoAmIQuery } from '../../generated/graphql'
+import { usePostsLazyQuery, useWhoAmIQuery } from '../../generated/graphql'
 import getFullname from '../../utils/selectors/fullName'
 import IndividualPost from '../../components/molecules/IndividualPost'
 import Link from 'next/link'

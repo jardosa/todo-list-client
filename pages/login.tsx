@@ -81,7 +81,7 @@ const Login = () => {
                         className="hover:text-green-400 focus:text-green-400 transition cursor-pointer underline"
                         href={'/register'}
                     >
-                        Don't have an account? Register.
+                        {`Don't have an account? Register.`}
                     </Link>
                     <p className="absolute self-center bottom-2 text-red-400 font-semibold text-center">
                         {error}

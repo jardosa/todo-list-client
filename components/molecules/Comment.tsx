@@ -101,7 +101,7 @@ const Comment = ({
                     {fullName}
                 </Link>
             </div>
-            <div className="text-base">{parseDateTime(comment?.updatedAt)}</div>
+            <div className="text-base">{parseDateTime(comment?.updatedAt, 'utc')}</div>
             {(viewMode === 'read' || viewMode === 'delete') && (
                 <div className="leading-5 text-sm">{comment?.body}</div>
             )}
